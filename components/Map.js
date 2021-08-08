@@ -1,6 +1,8 @@
 import {useState} from "react";
 import ReactMapGL,{Marker,Popup} from 'react-map-gl';
 import getCenter from "geolib/es/getCenter";
+import Image from "next/dist/client/image";
+
 
 function Map({searchResults}) {
     const [selectedLocation,setSelectedLocation]=useState({});
@@ -17,13 +19,13 @@ function Map({searchResults}) {
         height: "100%",
         latitude: center.latitude,
         longitude: center.longitude,
-        zoom:11,
+        zoom:12,
       });
 
 
     return (
         <ReactMapGL
-        mapStyle='mapbox://styles/umer-a/cks1xc2952ozs17lfdzts6ogu'
+        mapStyle="mapbox://styles/umer-a/cks1xc2952ozs17lfdzts6ogu"
         mapboxApiAccessToken={process.env.mapbox_key}
         {...viewport}
         onViewportChange={nextViewport => setViewport(nextViewport)}
@@ -47,15 +49,28 @@ function Map({searchResults}) {
                 </Marker>
                 {selectedLocation.long===result.long ?(
                     
-                    <Popup className="text-red-400"
+                    <Popup className="w-60 h-20 " 
                     onClose={()=>setSelectedLocation({})}
                     closeOnClick={true}
                     longitude={result.long}
                     latitude={result.lat}
                     >
-                        
-                        {result.title}
-                      
+                       
+                       
+                       <div className="flex  items-center  text-red-600 ">
+                            
+                            <p className="font-semibold">{result.title}</p>
+                            
+                            <Image 
+                            src= {result.img} 
+                            width={300}
+                            height={200}
+                            className="rounded-lg"
+                       />
+                          
+                       </div>
+                       
+                   
                        
                     </Popup>
                     
